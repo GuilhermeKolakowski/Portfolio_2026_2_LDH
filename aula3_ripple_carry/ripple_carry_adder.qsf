@@ -41,7 +41,7 @@ set_global_assignment -name DEVICE 10M50DAF484C6GES
 set_global_assignment -name TOP_LEVEL_ENTITY adder_4b
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 15.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:45:13 JUNE 17,2016"
-set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
@@ -442,7 +442,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[33]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[34]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[35]
 set_global_assignment -name VERILOG_FILE tb_basic_add.v
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
 set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_basic_add -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME tb_basic_add -section_id eda_simulation
@@ -450,3 +449,4 @@ set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_basic_add
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "100 us" -section_id tb_basic_add
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_basic_add -section_id tb_basic_add
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_basic_add.v -section_id tb_basic_add
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
