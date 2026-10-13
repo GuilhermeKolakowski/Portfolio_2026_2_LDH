@@ -3,55 +3,52 @@ module gate_counter(
 	input clk,			// clock de 1s
 	input enable,		// motor ligado
 	input dir,			// 1 abrindo e 0 fechando
-	output start_stop,	// portao fechado
-	output end_stop,	// portao aberto
+	output reg start_stop,	// portao fechado
+	output reg end_stop,	// portao aberto
 	output reg [9:0] led_bar
 );
 
-	// A cada 1 segundo o portao anda uma posicao
-	// (reset assincrono porque o clock de 1s fica parado durante o reset)
-	always @(posedge clk or posedge rst)
-	begin
-		if(rst)
-		begin
-			led_bar <= 0;
-		end
-		else if(enable)
-		begin
-			if(dir)
-			begin	// abrindo: acende mais um LED
-				case(led_bar)
-					10'b0000000000: led_bar <= 10'b0000000001;
-					10'b0000000001: led_bar <= 10'b0000000011;
-					10'b0000000011: led_bar <= 10'b0000000111;
-					10'b0000000111: led_bar <= 10'b0000001111;
-					10'b0000001111: led_bar <= 10'b0000011111;
-					10'b0000011111: led_bar <= 10'b0000111111;
-					10'b0000111111: led_bar <= 10'b0001111111;
-					10'b0001111111: led_bar <= 10'b0011111111;
-					10'b0011111111: led_bar <= 10'b0111111111;
-					10'b0111111111: led_bar <= 10'b1111111111;
-				endcase
-			end
-			else
-			begin	// fechando: apaga um LED
-				case(led_bar)
-					10'b1111111111: led_bar <= 10'b0111111111;
-					10'b0111111111: led_bar <= 10'b0011111111;
-					10'b0011111111: led_bar <= 10'b0001111111;
-					10'b0001111111: led_bar <= 10'b0000111111;
-					10'b0000111111: led_bar <= 10'b0000011111;
-					10'b0000011111: led_bar <= 10'b0000001111;
-					10'b0000001111: led_bar <= 10'b0000000111;
-					10'b0000000111: led_bar <= 10'b0000000011;
-					10'b0000000011: led_bar <= 10'b0000000001;
-					10'b0000000001: led_bar <= 10'b0000000000;
-				endcase
-			end		
-		end		
-	end		
+	reg [3:0] count;		
+	reg [3:0] nextCount;	
 
-	assign start_stop = (led_bar == 10'b0000000000);
-	assign end_stop   = (led_bar == 10'b1111111111);
+
+	always @(posedge clk or posedge rst) begin
+		if(rst)
+			count <= 0;
+		else
+			count <= nextCount;
+	end
+
+	//Lógica do próximo estado
+	always @(*) begin
+		nextCount = count;		// se nada mudar, fica onde esta
+		if(enable) begin
+			if(dir == 1 && count < 10)
+				nextCount = count + 1;	// abrindo
+			else if(dir == 0 && count > 0)
+				nextCount = count - 1;	// fechando
+		end
+	end
+
+	//Lógica de saída
+	always @(*) begin
+		start_stop = (count == 0);
+		end_stop   = (count == 10);
+
+		case(count)
+			0:  led_bar = 10'b0000000000;
+			1:  led_bar = 10'b0000000001;
+			2:  led_bar = 10'b0000000011;
+			3:  led_bar = 10'b0000000111;
+			4:  led_bar = 10'b0000001111;
+			5:  led_bar = 10'b0000011111;
+			6:  led_bar = 10'b0000111111;
+			7:  led_bar = 10'b0001111111;
+			8:  led_bar = 10'b0011111111;
+			9:  led_bar = 10'b0111111111;
+			10: led_bar = 10'b1111111111;
+			default: led_bar = 10'b0000000000;
+		endcase
+	end
 
 endmodule
