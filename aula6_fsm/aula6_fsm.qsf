@@ -416,15 +416,10 @@ set_location_assignment PIN_AB3 -to GPIO[32]
 set_location_assignment PIN_Y3 -to GPIO[33]
 set_location_assignment PIN_AB2 -to GPIO[34]
 set_location_assignment PIN_AA2 -to GPIO[35]
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VERILOG_FILE DE10_LITE_Golden_Top.v
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name BOARD "MAX 10 DE10 - Lite"
 set_global_assignment -name EDA_DESIGN_ENTRY_SYNTHESIS_TOOL Synplify
 set_global_assignment -name EDA_LMF_FILE synplcty.lmf -section_id eda_design_synthesis
@@ -440,9 +435,6 @@ set_global_assignment -name EDA_BOARD_DESIGN_SIGNAL_INTEGRITY_TOOL "IBIS (Signal
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT IBIS -section_id eda_board_design_signal_integrity
 set_global_assignment -name EDA_BOARD_DESIGN_BOUNDARY_SCAN_TOOL "BSDL (Boundary Scan)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT BSDL -section_id eda_board_design_boundary_scan
-set_global_assignment -name VERILOG_FILE fsm_gate_ctrl.v
-set_global_assignment -name VERILOG_FILE fsm_pattern_detector.v
-set_global_assignment -name VERILOG_FILE tb_pattern_detector.v
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
 set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_pattern_detector -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME tb_pattern_detector -section_id eda_simulation
@@ -450,3 +442,13 @@ set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_pattern_d
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "100 ps" -section_id tb_pattern_detector
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_pattern_detector -section_id tb_pattern_detector
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_pattern_detector.v -section_id tb_pattern_detector
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VERILOG_FILE DE10_LITE_Golden_Top.v
+set_global_assignment -name VERILOG_FILE fsm_gate_ctrl.v
+set_global_assignment -name VERILOG_FILE fsm_pattern_detector.v
+set_global_assignment -name VERILOG_FILE tb_pattern_detector.v
+set_global_assignment -name VERILOG_FILE gate_counter.v
+set_global_assignment -name VERILOG_FILE clk_1s.v
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

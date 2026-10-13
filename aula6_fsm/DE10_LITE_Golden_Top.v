@@ -127,13 +127,46 @@ module DE10_LITE_Golden_Top(
 //  REG/WIRE declarations
 //=======================================================
 
+	wire rst, clk_1s, power, dir, start_stop, end_stop;
 
-
+	assign rst = ~KEY[0];	// KEY0 = reset
 
 //=======================================================
 //  Structural coding
 //=======================================================
 
+	clk_1s div1 (
+		.rst(rst),
+		.clk_50M(MAX10_CLK1_50),
+		.clk_out(clk_1s)
+	);
 
+	fsm_gate_ctrl fsm (
+		.rst(rst),
+		.clk(MAX10_CLK1_50),
+		.user_button(~KEY[1]),	// KEY1 = abre/fecha
+		.start_stop(start_stop),
+		.end_stop(end_stop),
+		.motor_power(power),
+		.motor_direction(dir)
+	);
+
+	gate_counter portao (
+		.rst(rst),
+		.clk(clk_1s),
+		.enable(power),
+		.dir(dir),
+		.start_stop(start_stop),
+		.end_stop(end_stop),
+		.led_bar(LEDR)
+	);
+
+	// apaga os displays
+	assign HEX0 = 8'hFF;
+	assign HEX1 = 8'hFF;
+	assign HEX2 = 8'hFF;
+	assign HEX3 = 8'hFF;
+	assign HEX4 = 8'hFF;
+	assign HEX5 = 8'hFF;
 
 endmodule
