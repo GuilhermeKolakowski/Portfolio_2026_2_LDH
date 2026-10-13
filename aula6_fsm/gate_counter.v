@@ -19,21 +19,28 @@ module gate_counter(
 			count <= nextCount;
 	end
 
-	//Lógica do próximo estado
+	//próximo estado
 	always @(*) begin
-		nextCount = count;		// se nada mudar, fica onde esta
+		nextCount = count;		// se nada mudar fica onde esta
 		if(enable) begin
 			if(dir == 1 && count < 10)
-				nextCount = count + 1;	// abrindo
+				nextCount = count + 1;	// subindo a contagem entao esta vai abrir
 			else if(dir == 0 && count > 0)
-				nextCount = count - 1;	// fechando
+				nextCount = count - 1;	// descendo a contagem entao vai fechar
 		end
 	end
 
-	//Lógica de saída
+	//saída
 	always @(*) begin
-		start_stop = (count == 0);
-		end_stop   = (count == 10);
+		if(count == 0)		// portao fechado
+			start_stop = 1;
+		else
+			start_stop = 0;
+
+		if(count == 10)		// portao aberto
+			end_stop = 1;
+		else
+			end_stop = 0;
 
 		case(count)
 			0:  led_bar = 10'b0000000000;
