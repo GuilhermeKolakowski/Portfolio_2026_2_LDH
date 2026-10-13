@@ -128,6 +128,7 @@ module DE10_LITE_Golden_Top(
 //=======================================================
 
 	wire rst, clk_1s, power, dir, start_stop, end_stop;
+	wire press;
 
 	assign rst = ~KEY[0];	// KEY0 = reset
 
@@ -141,10 +142,18 @@ module DE10_LITE_Golden_Top(
 		.clk_out(clk_1s)
 	);
 
+	edge_detector botao (
+		.clk(MAX10_CLK1_50),
+		.rst(rst),
+		.button(~KEY[1]),		// KEY1 = abre/fecha/para
+		.but_press(press),
+		.but_release()
+	);
+
 	fsm_gate_ctrl fsm (
 		.rst(rst),
 		.clk(MAX10_CLK1_50),
-		.user_button(~KEY[1]),	// KEY1 = abre/fecha
+		.user_button(press),
 		.start_stop(start_stop),
 		.end_stop(end_stop),
 		.motor_power(power),
