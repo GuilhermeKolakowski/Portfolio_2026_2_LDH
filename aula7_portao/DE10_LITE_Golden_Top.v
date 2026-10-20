@@ -127,72 +127,13 @@ module DE10_LITE_Golden_Top(
 //  REG/WIRE declarations
 //=======================================================
 
-	wire rst, clk_1ms, clk_1s;
-	wire press, power, dir, start_stop, end_stop;
-	wire gate_open, timeout;
 
-	assign rst = ~KEY[0];	// KEY0 = reset
+
 
 //=======================================================
 //  Structural coding
 //=======================================================
 
-	// divisores sem reset: o clock nunca para, entao a FSM ve o reset
-	clk_1ms div_1ms (
-		.rst(1'b0),
-		.clk_50M(MAX10_CLK1_50),
-		.clk_out(clk_1ms)
-	);
 
-	clk_1s div_1s (
-		.rst(1'b0),
-		.clk_50M(MAX10_CLK1_50),
-		.clk_out(clk_1s)
-	);
-
-	edge_detector botao (
-		.clk(clk_1ms),
-		.rst(rst),
-		.button(~KEY[1]),		// KEY1 = abre/fecha/para
-		.but_press(press),
-		.but_release()
-	);
-
-	fsm_gate_ctrl fsm (
-		.rst(rst),
-		.clk(clk_1ms),
-		.user_button(press),
-		.start_stop(start_stop),
-		.end_stop(end_stop),
-		.timeout(timeout),
-		.motor_power(power),
-		.motor_direction(dir),
-		.gate_open(gate_open)
-	);
-
-	gate_counter portao (
-		.rst(rst),
-		.clk(clk_1s),
-		.enable(power),
-		.dir(dir),
-		.start_stop(start_stop),
-		.end_stop(end_stop),
-		.led_bar(LEDR)
-	);
-
-	timer_5s tempo (
-		.rst(rst),
-		.clk(clk_1s),
-		.gate_open(gate_open),
-		.timeout(timeout)
-	);
-
-	// apaga os displays
-	assign HEX0 = 8'hFF;
-	assign HEX1 = 8'hFF;
-	assign HEX2 = 8'hFF;
-	assign HEX3 = 8'hFF;
-	assign HEX4 = 8'hFF;
-	assign HEX5 = 8'hFF;
 
 endmodule
