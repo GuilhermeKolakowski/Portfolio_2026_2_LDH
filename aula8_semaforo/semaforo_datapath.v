@@ -7,7 +7,7 @@ module semaforo_datapath(
 	output top
 );
 
-	wire cnt;
+	wire [4:0] cnt;
 	reg [4:0] sel_time;
 	
 	counter u1(

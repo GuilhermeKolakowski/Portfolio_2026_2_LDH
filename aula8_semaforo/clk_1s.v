@@ -10,12 +10,12 @@ module clk_1s (
 		if(rst) begin
 			count   <= 0;
 			clk_out <= 0;
+		end else if(count == 25'd24999999) begin	// meio segundo
+			count   <= 0;				// zera a contagem
+			clk_out <= ~clk_out;		// Alterna clock_out
 		end else begin
 			count <= count + 1;
-			if(count == 25'd25000000) begin
-				clk_out <= ~clk_out;  //Alterna clock_out
-			end
 		end
 	end
-	
+
 endmodule

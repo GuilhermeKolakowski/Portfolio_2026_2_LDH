@@ -23,7 +23,8 @@ module semaforo_fsm(
 	reg [2:0] nextState;
 	
 	//Motor de estados
-	always @(posedge clk) begin
+	//(reset assincrono porque o clock de 1s fica parado durante o reset)
+	always @(posedge clk or posedge rst) begin
 		if(rst)
 			state <= `STATE_RED_LOAD;
 		else
@@ -53,6 +54,7 @@ module semaforo_fsm(
 				else
 					nextState = `STATE_GREEN;
 			 end
+			default: nextState = `STATE_RED_LOAD;
 		endcase
 	end
 	//Logica da saida
@@ -86,7 +88,10 @@ module semaforo_fsm(
 				lights = 3'b001;
 				sel = 2'd2;
 			end
-			
+			default: begin
+				lights = 3'b100;
+				sel = 2'd0;
+			end
 		endcase
 	end
 
