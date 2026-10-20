@@ -7,7 +7,7 @@ module counter(
 	
 	reg [4:0] cnt;
 	
-	always @(posedge clk) begin
+	always @(posedge clk or posedge rst) begin
 		if(rst)
 			cnt<= 0;
 		else
